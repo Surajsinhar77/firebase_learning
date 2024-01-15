@@ -1,19 +1,17 @@
 import React, {useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import Button from './UI/Button';
+import {signInWithEmailAndPassword, signInWithPopup} from 'firebase/auth';
+import { auth, googleProvider} from '../firebase/config';
+import { authUser } from '../common/AuthContext';
 import Input from './UI/Input';
-import {authUser} from '../common/AuthContext'
-
-//fire base module
-import {auth, googleProvider} from './../firebase/config'
+import Button from './UI/Button';
 import { FaGoogle } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
-import {createUserWithEmailAndPassword, signInWithPopup} from "firebase/auth";
 
-function Auth() {
+
+function Login() {
     const navigation = useNavigate();
     const [userData, setUserData]= useState();
-
     const {userInfo, userLogin}  = authUser();
 
     function getUserData(e){
@@ -23,34 +21,41 @@ function Auth() {
         })
     }
 
-
-    // signin with email and password using firebase
-    async function create_userRegister(e){
-        e.preventDefault();
+    async function loginWithEmailandPasswod(){
         try{
-            const result = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
-            navigation("/login");
+            await signInWithEmailAndPassword(auth, userData.email, userData.password);
+            userLogin(
+                {email: auth?.currentUser?.email,
+                accessToken: auth?.currentUser?.accessToken,
+                uid: auth?.currentUser?.uid}
+            );
+            navigation('/')
         }catch(err){
-            console.error(err, err.message);
-        }
-    };
-
-
-    async function create_userRegisterWithGoogle(e){
-        e.preventDefault();
-        try{
-            const result = await signInWithPopup(auth, googleProvider);
-            navigation('/login')
-        }catch(err){
-            console.error(err, err.message);
+            console.log(err);
+            alert(err.message);
         }
     }
 
+    async function login_UserWithGoogle(){
+        try{
+            await signInWithPopup(auth, googleProvider);
+            userLogin(
+                {email: auth?.currentUser?.email,
+                accessToken: auth?.currentUser?.accessToken,
+                uid: auth?.currentUser?.uid}
+            );
+            alert("You are sucessfull Login ")
+            navigation('/')
+        }catch(err){
+            console.log(err);
+            alert(err.message);
+        }
+    }
 
     return (
         <div className='h-screen border flex flex-col items-center justify-center'>
             <div className="loginCard w-96 border p-5 rounded">
-                <h1 className='text-center text-3xl font-bold text-gray-700'>Create an Account</h1>
+                <h1 className='text-center text-3xl font-bold text-gray-700'>User Login</h1>
                 <div className="col h-48 flex flex-col justify-evenly">
                     <div className="row">
                         <label htmlFor="email" className='text-gray-700 font-semibold'>Email</label>
@@ -58,12 +63,12 @@ function Auth() {
                     </div>
                     <div className="row">
                         <label htmlFor="password" className='text-gray-700 font-semibold'>Password</label>
-                        <Input change={getUserData} name={"password"} type={"password"} placehld={"password"}/>
+                        <Input change={getUserData} name={"password"} type={"password"} placehld={"Password"}/>
                     </div>
                 </div>
                 <div className="row text-center">
                     <div className="submit font-medium text-lg">
-                        <Button click={create_userRegister} name={"SignUp"} clName={'border border-gray-600 py-2 px-4 text-center rounded-md bg-gray-800 text-white font-medium w-full flex items-center justify-center'}/>
+                        <Button click={loginWithEmailandPasswod} name={"Login"} clName={'border border-gray-600 py-2 px-4 text-center rounded-md bg-gray-800 text-white font-medium w-full flex items-center justify-center'}/>
                     </div>
                 </div>
 
@@ -73,11 +78,11 @@ function Auth() {
                     </div>
 
                     <div className="loginWithGoogleAndGithub">
-                        <h1 className='text-lg font-medium text-gray-700'>Create account with google and Github</h1>
-                        <p className='text-sm'>Create an account into just few steps </p>
+                        <h1 className='text-lg font-medium text-gray-700'>Login account with google and Github</h1>
+                        <p className='text-sm'>Login into just few steps </p>
                         <div className='py-4 grid grid-flow-col gap-4'>
                             <Button 
-                                click={create_userRegisterWithGoogle} 
+                                click={login_UserWithGoogle} 
                                 name="Google" 
                                 icon={<FaGoogle className='mr-2'/>} 
                                 clName={'border border-gray-600 py-2 px-4 text-center rounded-md bg-gray-800 text-white font-medium w-full flex items-center justify-center'}
@@ -95,4 +100,4 @@ function Auth() {
     )
 }
 
-export default Auth;
+export default Login
