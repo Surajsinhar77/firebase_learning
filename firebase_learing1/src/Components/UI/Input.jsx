@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Input() {
+function Input({name, type, placehld, change}) {
     return (
-        <input className='border border-gray-500 rounded py-2 pl-2' type="text" placeholder='placeholder' />
+        <input onChange={change} className='border rounded py-2 pl-2 w-full' type={type} placeholder={placehld} name={name} />
     )
 }
 
