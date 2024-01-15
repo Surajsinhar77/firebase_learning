@@ -8,16 +8,12 @@ export const AuthProvider = ({children}) =>{
     });
 
     function userLogin(userinfo){
-        localStorage.setItem("email", userinfo.email);
-        localStorage.setItem("accessToken", userinfo.accessToken);
-        localStorage.setItem("uid", userinfo.uid);
-        setUserInfo(userinfo);
+        localStorage.setItem("userinfo", userinfo);
+        setUserInfo({"userinfo":userInfo}); 
     }
 
     function userLogout(){
-        localStorage.removeItem("email");
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("uid");
+        localStorage.removeItem("userinfo");
         setUserInfo(null);
     }
     return (
