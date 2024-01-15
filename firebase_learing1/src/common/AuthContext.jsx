@@ -4,11 +4,11 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({children}) =>{
     const [userInfo, setUserInfo]  = useState(()=>{
-        localStorage.getItem("userinfo") || null 
+        return JSON.parse(localStorage.getItem("userinfo")) || null;
     });
 
     function userLogin(userinfo){
-        localStorage.setItem("userinfo", userinfo);
+        localStorage.setItem("userinfo", JSON.stringify(userinfo));
         setUserInfo({"userinfo":userInfo}); 
     }
 

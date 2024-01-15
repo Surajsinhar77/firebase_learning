@@ -14,8 +14,6 @@ function Auth() {
     const navigation = useNavigate();
     const [userData, setUserData]= useState();
 
-    const {userInfo, userLogin}  = authUser();
-
     function getUserData(e){
         e.preventDefault();
         setUserData({
@@ -23,29 +21,26 @@ function Auth() {
         })
     }
 
-
     // signin with email and password using firebase
     async function create_userRegister(e){
         e.preventDefault();
         try{
-            const result = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
+            await createUserWithEmailAndPassword(auth, userData.email, userData.password);
             navigation("/login");
         }catch(err){
             console.error(err, err.message);
         }
     };
 
-
     async function create_userRegisterWithGoogle(e){
         e.preventDefault();
         try{
-            const result = await signInWithPopup(auth, googleProvider);
+            await signInWithPopup(auth, googleProvider);
             navigation('/login')
         }catch(err){
             console.error(err, err.message);
         }
     }
-
 
     return (
         <div className='h-screen border flex flex-col items-center justify-center'>
