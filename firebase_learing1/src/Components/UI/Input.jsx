@@ -6,4 +6,4 @@ function Input({name, type, placehld, change}) {
     )
 }
 
-export default Input
+export default Input;

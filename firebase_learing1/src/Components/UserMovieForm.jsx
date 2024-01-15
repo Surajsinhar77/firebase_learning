@@ -6,17 +6,22 @@ import { db } from '../firebase/config';
 
 function UserMovieForm() {
     const moviesCollectionRef = collection(db, "moviedata");
-    const [newMovieData ,setMovieData] = useState({ name: '', email: '' });
+    const [newMovieData ,setMovieData] = useState({});
 
     const handleInputChange = (e) => {
-        e.preventDefaut();
+        e.preventDefault();
         setMovieData({ ...newMovieData, [e.target.name]: e.target.value });
     };
 
-    async function handlePushData(e){
-        e.preventDefaut();
-        await addDoc(moviesCollectionRef, newMovieData);
-        console.log("This is Done here");
+    async function handlePushData(){
+        try{
+            await addDoc(moviesCollectionRef, newMovieData);
+            alert("Data is sucessfull added");
+            setMovieData({});
+        }catch(err){
+            console.error(err);
+        }
+        
     }
 
     return (
@@ -26,9 +31,9 @@ function UserMovieForm() {
                 <label>
                     Movie Name:
                     <Input
-                        type="text"
-                        name="movieName"
-                        value={newMovieData.name}
+                        type={"text"}
+                        name={"movieName"}
+                        value={newMovieData.movieName}
                         clName={"border rounded"}
                         change={handleInputChange}
                     />
@@ -37,9 +42,9 @@ function UserMovieForm() {
                 <label>
                     Relesed Date:
                     <Input
-                        type="text"
-                        name="releaseDate"
-                        value={newMovieData.email}
+                        type={"text"}
+                        name={"releaseDate"}
+                        value={newMovieData.releaseDate}
                         clName={"border rounded"}
                         change={handleInputChange}
                     />
@@ -48,9 +53,9 @@ function UserMovieForm() {
                 <label>
                     Oscar Got:
                     <Input
-                        type="text"
-                        name="oscarGot"
-                        value={newMovieData.email}
+                        type={"text"}
+                        name={"oscarGot"}
+                        value={newMovieData.oscarGot}
                         clName={"border rounded"}
                         change={handleInputChange}
                     />
