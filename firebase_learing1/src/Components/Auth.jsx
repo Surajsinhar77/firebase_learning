@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from './UI/Button';
 import Input from './UI/Input';
 import {authUser} from '../common/AuthContext'
+import { Link } from 'react-router-dom';
 
 //fire base module
 import {auth, googleProvider} from './../firebase/config'
@@ -29,6 +30,7 @@ function Auth() {
             navigation("/login");
         }catch(err){
             console.error(err, err.message);
+            alert(err.message)
         }
     };
 
@@ -84,6 +86,9 @@ function Auth() {
                             />
                         </div>
                     </div>
+                </div>
+                <div className="userAlreadyhaveAccount">
+                    <p>Already have an account <Link to="/login" className="text-blue-500 cursor-pointer">Login</Link> </p>
                 </div>
             </div>
         </div>

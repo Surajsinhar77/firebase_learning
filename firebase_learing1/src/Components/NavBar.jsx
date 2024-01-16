@@ -9,15 +9,16 @@ import { useNavigate } from 'react-router-dom';
 import { authUser } from '../common/AuthContext';
 
 function NavBar() {
-    const {userInfo} = authUser();
+    const {userInfo, userLogout} = authUser();
 
     const navigation = useNavigate();
 
-    async function userLogout(e){
+    async function userLogingOut(e){
         e.preventDefault();
         try{
             const result = await signOut(auth);
             console.log(result);
+            userLogout()
             navigation('/signup')
         }catch(err){
             console.error(err, err.message);
@@ -45,7 +46,7 @@ function NavBar() {
                             <Button 
                                 clName={"border w-20 py-1 px-2 rounded bg-black text-white font-semibold"} 
                                 name={"LOGOUT"}
-                                click={userLogout}
+                                click={userLogingOut}
                             />
                         </>
                         :

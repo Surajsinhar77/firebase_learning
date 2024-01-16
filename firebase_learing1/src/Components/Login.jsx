@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate , Link} from 'react-router-dom';
 import {signInWithEmailAndPassword, signInWithPopup} from 'firebase/auth';
 import { auth, googleProvider} from '../firebase/config';
 import { authUser } from '../common/AuthContext';
@@ -94,6 +94,9 @@ function Login() {
                             />
                         </div>
                     </div>
+                </div>
+                <div className="userAlreadyhaveAccount">
+                    <p>Create an account <Link to="/signup" className="text-blue-500 cursor-pointer">Signup</Link> </p>
                 </div>
             </div>
         </div>
