@@ -29,7 +29,7 @@ function Login() {
                 accessToken: auth?.currentUser?.accessToken,
                 uid: auth?.currentUser?.uid}
             );
-            navigation('/')
+            navigation('/');
         }catch(err){
             console.log(err);
             alert(err.message);

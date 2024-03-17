@@ -11,7 +11,7 @@ function Home() {
     const getDataRef = collection(db, 'moviedata');
     const movies = useCallback(async ()=>{
         try{
-            const data = await getDocs(getDataRef)
+            const data = await getDocs(getDataRef);
             const dataInArray  = data.docs.map((doc)=>({
                 ...doc.data(),
                 id:doc.id 
@@ -26,6 +26,8 @@ function Home() {
     useEffect(()=>{
         movies()
     },[movies])
+
+    
 
     return (
         <>
