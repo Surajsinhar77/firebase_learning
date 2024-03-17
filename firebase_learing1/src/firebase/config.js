@@ -4,12 +4,12 @@ import {getAuth, GoogleAuthProvider} from 'firebase/auth';
 import {getFirestore} from 'firebase/firestore';
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyA-TyL7gng1G_bzfbqGg2bn3XqRzf7_wPo",
-    authDomain: "learning-firebase-84e27.firebaseapp.com",
-    projectId: "learning-firebase-84e27",
-    storageBucket: "learning-firebase-84e27.appspot.com",
-    messagingSenderId: "730465513813",
-    appId: "1:730465513813:web:ec9e2628096b8fdf13ffdc"
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKET,
+    messagingSenderId: process.env.MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID
 };
 
 // Initialize Firebase
